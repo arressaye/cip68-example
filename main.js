@@ -36,6 +36,7 @@ async function mint(name, image, recipient) {
   const userTokenName = toUnit(mintingPolicyId, Buffer.from(name, "utf8").toString("hex"), 222);
   const refTokenName = toUnit(mintingPolicyId, Buffer.from(name, "utf8").toString("hex"), 100);
   lucid.selectWalletFrom({ address: recipient });
+  console.log(createDatum(name, image));
   const tx = await lucid
     .newTx()
     .validTo(Date.now() + 15 * 60 * 1000) //set ttl
@@ -55,7 +56,7 @@ async function mint(name, image, recipient) {
       //lock the minted reference token in the holding contract
       refHolderAddress,
       {
-        asHash: "d879" + Data.to(Data.from(createDatum(name, image))),
+        asHash: "d879" + createDatum(name, image),
       },
       {
         [refTokenName]: 1n,
