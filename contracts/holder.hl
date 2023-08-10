@@ -1,0 +1,13 @@
+spending ref_holder
+
+//This is a barebones contract for the script holding reference tokens. It only checks that the authorised owner has signed the transaction.
+
+const owner: PubKeyHash = PubKeyHash::new(#e6e11610416c2749c9f0406dbf899fc1193834ec2f34fe4c35b8330e)
+
+func is_authorised(tx: Tx) -> Bool {
+    tx.is_signed_by(owner)
+}
+
+func main(_, _, ctx: ScriptContext) -> Bool {
+    is_authorised(ctx.tx)
+}

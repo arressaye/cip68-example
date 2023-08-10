@@ -1,0 +1,16 @@
+minting cip68_test
+
+//This is a barebones minting contract that mints/burns as long as the transaction is signed by the authorised owner
+//There is NO other safety checks in this minting contract
+//This means that the contract does not check whether the tokens minted are of the intended standard - even though you may want CIP68 tokens to be minted, this contract does not mandate this to be the case
+
+
+const owner: PubKeyHash = PubKeyHash::new(#e6e11610416c2749c9f0406dbf899fc1193834ec2f34fe4c35b8330e)
+
+func is_authorised(tx: Tx) -> Bool {
+    tx.is_signed_by(owner)
+}
+
+func main(_, ctx: ScriptContext) -> Bool {
+    is_authorised(ctx.tx)
+}
